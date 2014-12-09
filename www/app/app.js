@@ -25,5 +25,9 @@ angular.module("ionicApp",["ionic"])
                 templateUrl: "app/home/home.html"
                 //controller: 'AppCtrl'
             })
-        $urlRouterProvider.otherwise('/home');
+            .state('app',{
+                url:"/app",
+                templateUrl:"app/layout/menu-layout.html"
+            })
+        $urlRouterProvider.otherwise('/app');
     });
