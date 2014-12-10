@@ -9,16 +9,15 @@
         console.log("$stateParams", $stateParams);
         vm.teamId = Number($stateParams.id);
 
-        var data = eliteApi.getLeagueData();
-
-        var team = _.chain(data.teams)
+        eliteApi.getLeagueData().then(function(data){
+            var team = _.chain(data.teams)
                 .flatten("divisionTeams")
                 .find({ "id": vm.teamId })
                 .value();
 
-        vm.teamName = team.name;
+            vm.teamName = team.name;
 
-        vm.games = _.chain(data.games)
+            vm.games = _.chain(data.games)
                 .filter(isTeamInGame)
                 .map(function (item) {
                     var isTeam1 = (item.team1Id === vm.teamId ? true : false);
@@ -36,10 +35,13 @@
                 })
                 .value();
 
-        vm.teamStanding = _.chain(data.standings)
-            .flatten("divisionStandings")
-            .find({ "teamId": vm.teamId })
-            .value();
+            vm.teamStanding = _.chain(data.standings)
+                .flatten("divisionStandings")
+                .find({ "teamId": vm.teamId })
+                .value();
+
+
+        });
 
 
         vm.following = false;

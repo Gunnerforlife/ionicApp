@@ -8,10 +8,9 @@
         //var vm = this;
         var gameId = Number($stateParams.id);
         console.log('this is it'+$stateParams.id);
-        var data = eliteApi.getLeagueData();
-        $scope.game = _.find(data.games, {"id":gameId});
-        console.log($scope.game);
-    }
-    ]);
+        eliteApi.getLeagueData().then(function(data){
+            $scope.game = _.find(data.games, {"id":gameId});
+        });
+    }]);
 
 })();

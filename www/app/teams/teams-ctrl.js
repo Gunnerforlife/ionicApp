@@ -6,9 +6,10 @@
 
     angular.module('ionicApp').controller('teamsCtrl',['eliteApi','$scope','$state',function(eliteApi,$scope,$state){
         //var vm = this;
-        var data = eliteApi.getLeagueData();
-        console.log(data.teams);
-        $scope.teams = data.teams;
+        eliteApi.getLeagueData().then(function(data){
+            $scope.teams = data.teams;
+        });
+
     }
     ]);
 

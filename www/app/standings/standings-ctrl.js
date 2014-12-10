@@ -6,8 +6,9 @@
 
     angular.module('ionicApp').controller('standingsCtrl',['eliteApi','$scope','$state',function(eliteApi,$scope,$state){
         //var vm = this;
-        var data = eliteApi.getLeagueData();
-        $scope.standings = data.standings;
+        eliteApi.getLeagueData().then(function(data){
+            $scope.standings = data.standings;
+        });
     }
     ]);
 
