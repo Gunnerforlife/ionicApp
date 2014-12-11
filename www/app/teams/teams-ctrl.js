@@ -11,7 +11,17 @@
             console.log(data);
             $scope.teams = data.teams;
         });
+        $scope.loadList = function(forceRefresh){
+            eliteApi.getLeagueData(forceRefresh).then(function(data){
+                console.log('in teams control');
+                console.log(data);
+                $scope.teams = data.teams;
+            }).finally(function(){
+                $scope.$broadcast('scroll.refreshComplete');
+            });
+        };
 
+        $scope.loadList(false);
     }
     ]);
 
