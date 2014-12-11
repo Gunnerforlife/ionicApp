@@ -9,6 +9,8 @@
         var gameId = Number($stateParams.id);
         console.log('this is it'+$stateParams.id);
         eliteApi.getLeagueData().then(function(data){
+            console.log('in game control');
+            console.log(data);
             $scope.game = _.find(data.games, {"id":gameId});
         });
     }]);

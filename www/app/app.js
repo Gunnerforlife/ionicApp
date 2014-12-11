@@ -1,9 +1,9 @@
 /**
  * Created by persi52 on 9/12/14.
  */
-angular.module("ionicApp",["ionic"])
+angular.module("ionicApp",["ionic","angular-data.DSCacheFactory"])
 
-    .run(function($ionicPlatform) {
+    .run(function($ionicPlatform, DSCacheFactory) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -14,6 +14,10 @@ angular.module("ionicApp",["ionic"])
                 // org.apache.cordova.statusbar required
                 StatusBar.styleDefault();
             }
+            DSCacheFactory("leaguesDataCache", { storageMode: "localStorage", maxAge: 36000, deleteOnExpire: "aggressive" });
+            DSCacheFactory("leaguesCache", { storageMode: "localStorage", maxAge: 36000, deleteOnExpire: "aggressive" });
+            DSCacheFactory("myTeamsCache", { storageMode: "localStorage" });
+            DSCacheFactory("staticCache", { storageMode: "localStorage" });
         });
     })
 
@@ -104,5 +108,5 @@ angular.module("ionicApp",["ionic"])
                 }
             });
 
-        $urlRouterProvider.otherwise('/app/teams');
+        $urlRouterProvider.otherwise('/home/leagues');
     });

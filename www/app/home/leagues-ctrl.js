@@ -11,6 +11,7 @@
             $scope.leagues = data;
         });
         $scope.selectLeague = function(leagueId){
+            console.log(leagueId);
             eliteApi.setLeagueId(leagueId);
             $state.go("app.teams");
         };

@@ -7,6 +7,8 @@
     angular.module('ionicApp').controller('teamsCtrl',['eliteApi','$scope','$state',function(eliteApi,$scope,$state){
         //var vm = this;
         eliteApi.getLeagueData().then(function(data){
+            console.log('in teams control');
+            console.log(data);
             $scope.teams = data.teams;
         });
 

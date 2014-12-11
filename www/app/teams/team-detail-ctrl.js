@@ -1,16 +1,18 @@
 (function () {
     'use strict';
 
-    angular.module('ionicApp').controller('TeamDetailCtrl', ['$stateParams', '$ionicPopup', 'eliteApi', TeamDetailCtrl]);
+    angular.module('ionicApp').controller('TeamDetailCtrl', ['$stateParams', '$ionicPopup', 'eliteApi', 'myTeamsService', TeamDetailCtrl]);
 
     function TeamDetailCtrl($stateParams, $ionicPopup, eliteApi, myTeamsService) {
-        var vm = this;
+        var vm = this,
+            team = null,
+            leagueData = null;
 
         console.log("$stateParams", $stateParams);
         vm.teamId = Number($stateParams.id);
 
         eliteApi.getLeagueData().then(function(data){
-            var team = _.chain(data.teams)
+            team = _.chain(data.teams)
                 .flatten("divisionTeams")
                 .find({ "id": vm.teamId })
                 .value();
@@ -40,13 +42,12 @@
                 .find({ "teamId": vm.teamId })
                 .value();
 
-
+            leagueData = data.league;
         });
 
 
-        vm.following = false;
-
-        //vm.following = myTeamsService.isFollowingTeam(vm.teamId.toString());
+        //vm.following = false;
+        vm.following = myTeamsService.isFollowingTeam(vm.teamId.toString());
 
         vm.toggleFollow = function(){
 
@@ -66,6 +67,7 @@
                 myTeamsService.followTeam({ id: team.id, name: team.name, leagueId: leagueData.id, leagueName: leagueData.name });
             }
         };
+
 
         function isTeamInGame(item){
             return item.team1Id === vm.teamId || item.team2Id === vm.teamId;
